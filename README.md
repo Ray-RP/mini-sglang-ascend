@@ -160,6 +160,8 @@ pytest -q -o addopts="" tests/misc/test_pyproject_config.py
 
 ## Learn more
 
+- **Release notes:** [`docs/ascend_port/release_notes_0.1.0a1.md`](./docs/ascend_port/release_notes_0.1.0a1.md)
+  — `v0.1.0a1` Ascend Technical Preview, verified scope and limitations.
 - **Ascend port verdicts:** [`docs/ascend_port/`](./docs/ascend_port)
   — one signed verdict per gate, describing exactly what has been
   proven on 910B1 and what has NOT.
