@@ -32,7 +32,7 @@ patterns targeted by Gate 4.13b:
 * the twelve-hex-digit container id
 * the `root@<IP>` composite
 
-`git grep -l -E "sshpass|lvguang|117\.131\.156|998ce5ba6e5e"`
+`git grep -l -E "<OLD_SSHPASS_PATTERN>|<OLD_PASSWORD_PATTERN>|<OLD_HOST_PATTERN>|<OLD_CONTAINER_PATTERN>"`
 returned **zero matches** across the entire tracked working tree
 (the grep expression is quoted only for reproducibility; it maps
 onto the six secret substrings). Post-sweep `git diff --check`
@@ -91,10 +91,16 @@ placeholder-only and does not need sweeping.
 
 ## 4. Post-redaction grep summary
 
-Real-secret substring pattern — `sshpass|lvguang|117\.131\.156|998ce5ba6e5e`:
+Post-redaction verification checked the known leaked
+host/user/container/password substrings using local-only
+patterns. This document intentionally does not print those
+substrings — the placeholders below stand in for the real
+patterns actually executed against the tracked tree.
+
+Real-secret substring pattern — `<OLD_SSHPASS_PATTERN>|<OLD_PASSWORD_PATTERN>|<OLD_HOST_PATTERN>|<OLD_CONTAINER_PATTERN>`:
 
 ```
-$ git grep -l -E "sshpass|lvguang|117\.131\.156|998ce5ba6e5e"
+$ git grep -l -E "<OLD_SSHPASS_PATTERN>|<OLD_PASSWORD_PATTERN>|<OLD_HOST_PATTERN>|<OLD_CONTAINER_PATTERN>"
 (no output — zero files)
 ```
 
@@ -172,7 +178,7 @@ tally is unchanged by construction.
 
 | Question | Answer |
 |---|---|
-| Does `git grep -l -E "sshpass\|lvguang\|117\.131\.156\|998ce5ba6e5e"` return zero files? | Yes |
+| Does `git grep -l -E "<OLD_SSHPASS_PATTERN>\|<OLD_PASSWORD_PATTERN>\|<OLD_HOST_PATTERN>\|<OLD_CONTAINER_PATTERN>"` return zero files? | Yes |
 | Any tracked HEAD file still contains the plaintext SSH password? | No |
 | Any tracked HEAD file still contains the plaintext public IPv4? | No |
 | Any tracked HEAD file still contains the plaintext container id? | No |
