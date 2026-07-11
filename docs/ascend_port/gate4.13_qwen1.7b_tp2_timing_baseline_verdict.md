@@ -67,7 +67,7 @@ GATE4.13_TIMING_RESULT=PASS
 | Knob | Value |
 |---|---|
 | Hardware | 2 × Ascend 910B1 (64 GiB HBM each) |
-| Container | `998ce5ba6e5e` on `117.131.156.67:2202` |
+| Container | `<CONTAINER>` on `<HOST>:<PORT>` |
 | torch | 2.4.0 |
 | torch_npu | 2.9.0.post1 |
 | CANN | 8.5.1 |
@@ -95,9 +95,13 @@ between attempts, bump `--master_port`, thread
 `--cold-start-attempt-id` and `--memory-sync-retry-note` into the
 driver. Attempt 1 (port 29550) succeeded cleanly — no retry needed.
 
+> **Public hygiene note:** remote host, username, password, and
+> container identifiers are redacted in this document. The redaction
+> does not affect Gate 4.13 runtime evidence.
+
 ```bash
-sshpass -p 'lvguang@2026' ssh -p 2202 root@117.131.156.67 \
-  "docker exec 998ce5ba6e5e bash -c '
+ssh -p <PORT> <USER>@<HOST> \
+  "docker exec <CONTAINER> bash -c '
     set +e
     cd /mnt/nvme/LR-606/mini-sglang-ascend-gate4.13 &&
     mkdir -p logs &&
