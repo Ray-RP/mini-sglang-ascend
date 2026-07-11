@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.9-qwen1.7b-tp2-b2-equal-length`
 **Base commit:** `1141752` (tip of `ascend-port`, Gate 4.8 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §11)*
+**Freeze commit:** `705a8c6`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 B=2 equal-length batching
 proof — two ranks × Qwen3-1.7B × two equal-length prompts × greedy
