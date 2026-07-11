@@ -4,7 +4,11 @@
 **Verdict:** PASS
 **Branch:** `gate5.5-qwen4b-tp2-dynamic-admission-b1-b2-b1`
 **Base commit:** `7f87788` (tip of `ascend-port`, Gate 5.4a merge)
-**Freeze commit:** `9450ff5`
+**Freeze commit:** `d8ed3d2`
+**Original pre-amend commit:** `9450ff5` (superseded by header-fix
+amend; retained as provenance only — the final frozen SHA on the
+`gate5.5-qwen4b-tp2-dynamic-admission-b1-b2-b1` branch tip is
+`d8ed3d2`)
 **Date:** 2026-07-12
 **Kind:** Functional dynamic-admission bring-up — Qwen3-4B on 2 ×
 Ascend 910B1 under fixed TP=2, eager, `npu_fia`, bf16, greedy.
