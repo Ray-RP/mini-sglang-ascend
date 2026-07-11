@@ -70,7 +70,7 @@ GATE4.7_TIMING_RESULT=PASS
 | Knob | Value |
 |---|---|
 | Hardware | 2 × Ascend 910B1 (64 GiB HBM each) |
-| Container | `998ce5ba6e5e` on `117.131.156.67:2202` |
+| Container | `<CONTAINER>` on `<HOST>:<PORT>` |
 | torch | 2.4.0 |
 | torch_npu | 2.9.0.post1 |
 | CANN | 8.5.1 |
@@ -94,8 +94,8 @@ GATE4.7_TIMING_RESULT=PASS
 ## 3. Launch command
 
 ```bash
-sshpass -p 'lvguang@2026' ssh -p 2202 root@117.131.156.67 \
-  "docker exec 998ce5ba6e5e bash -c '
+ssh -p <PORT> <USER>@<HOST> \
+  "docker exec <CONTAINER> bash -c '
     cd /mnt/nvme/LR-606/mini-sglang-ascend &&
     PYTHONPATH=./python:\$PYTHONPATH \
     torchrun --nproc_per_node=2 --master_port=29408 \

@@ -54,7 +54,7 @@ one smoke script and one verdict document.
 
 ```
 Hardware:          Ascend 910B1 (1 die, 64 GiB HBM)
-Container:         998ce5ba6e5e on remote 117.131.156.67:2202
+Container:         <CONTAINER> on remote <HOST>:<PORT>
 Software:          Python 3.11.14
                    torch 2.9.0+cpu
                    torch_npu 2.9.0.post1+gitee7ba04
@@ -203,7 +203,7 @@ Every request returned its requested token budget.
 
 ## 4. Commands
 
-Executed on remote container `998ce5ba6e5e` at working directory
+Executed on remote container `<CONTAINER>` at working directory
 `/mnt/nvme/LR-606/mini-sglang-ascend-gate32`.
 
 Smoke:

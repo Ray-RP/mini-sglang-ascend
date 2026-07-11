@@ -136,7 +136,7 @@ tests/misc/test_pyproject_config.py               <suite> passed
 Combined row count from a single pytest invocation:
 `51 passed in 21.02s` (Gate 2.3f 47 + Gate 2.4 2 + Gate 2.5 2 = 51).
 
-Run environment: remote container `998ce5ba6e5e` on the Ascend host
+Run environment: remote container `<CONTAINER>` on the Ascend host
 described in the private CLAUDE.md; the tests themselves are pure-CPU
 and hermetic (real `pyzmq` on `ipc:///tmp/…`, no NPU, no HF
 tokenizer, no model weights).
