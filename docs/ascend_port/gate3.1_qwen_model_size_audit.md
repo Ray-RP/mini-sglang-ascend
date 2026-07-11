@@ -41,7 +41,7 @@ Out of scope:
 
 ## 2. Available Qwen3-family weights on the Ascend host
 
-Listing of `/mnt/nvme/models/` on container `998ce5ba6e5e`:
+Listing of `/mnt/nvme/models/` on container `<CONTAINER>`:
 
 ```
 Qwen3-0.6B          (baseline, prior gates)

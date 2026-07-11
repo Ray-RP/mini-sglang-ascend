@@ -90,7 +90,7 @@ Rank 0 exit code: 0.
 | Knob | Value |
 |---|---|
 | Hardware | 2 × Ascend 910B1 (64 GiB HBM each) |
-| Container | `998ce5ba6e5e` on `117.131.156.67:2202` |
+| Container | `<CONTAINER>` on `<HOST>:<PORT>` |
 | torch | 2.4.0 |
 | torch_npu | 2.9.0.post1 |
 | CANN | 8.5.1 |
@@ -161,8 +161,8 @@ from disk on the same box.
 ## 4. Launch command
 
 ```bash
-sshpass -p 'lvguang@2026' ssh -p 2202 root@117.131.156.67 \
-  "docker exec 998ce5ba6e5e bash -c '
+ssh -p <PORT> <USER>@<HOST> \
+  "docker exec <CONTAINER> bash -c '
     cd /mnt/nvme/LR-606/mini-sglang-ascend-gate48 &&
     PYTHONPATH=./python:\$PYTHONPATH \
     torchrun --nproc_per_node=2 --master_port=29418 \

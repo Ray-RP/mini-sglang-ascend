@@ -83,7 +83,7 @@ allocator corruption or cross-rank divergence.
 ```
 Hardware:          Ascend 910B1 (2 dies × 64 GiB HBM)
                    rank 0 → npu:0, rank 1 → npu:1
-Container:         998ce5ba6e5e on remote 117.131.156.67:2202
+Container:         <CONTAINER> on remote <HOST>:<PORT>
 Software:          Python 3.11.14
                    torch 2.9.0+cpu
                    torch_npu 2.9.0.post1+gitee7ba04
@@ -119,7 +119,7 @@ Prompts:           short = "Paris is"                          (2 tokens)
 
 ## 3. Launch command
 
-Executed on remote container `998ce5ba6e5e` at working directory
+Executed on remote container `<CONTAINER>` at working directory
 `/mnt/nvme/LR-606/mini-sglang-ascend-gate43`.
 
 ```bash
