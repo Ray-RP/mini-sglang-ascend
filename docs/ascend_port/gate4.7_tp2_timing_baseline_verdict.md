@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.7-tp2-timing-baseline`
 **Base commit:** `0fe503b` (tip of `ascend-port`, Gate 4.6 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §12)*
+**Freeze commit:** `8f4dc97`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 timing reproducibility
 snapshot — two ranks × Qwen3-0.6B × six offline cases
