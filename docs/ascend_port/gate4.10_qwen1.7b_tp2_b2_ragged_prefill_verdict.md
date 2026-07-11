@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.10-qwen1.7b-tp2-b2-ragged-prefill`
 **Base commit:** `8577594` (tip of `ascend-port`, Gate 4.9 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §11)*
+**Freeze commit:** `ffa6e8f`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 B=2 ragged-prefill proof
 — two ranks × Qwen3-1.7B × two prompts with *unequal* tokenized
