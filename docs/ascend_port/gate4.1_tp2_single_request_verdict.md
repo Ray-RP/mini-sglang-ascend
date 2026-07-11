@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.1-tp2-single-request-bringup`
 **Base commit:** `c651d91` (tip of `ascend-port`, Gate 3.4 merge)
-**Freeze commit:** *(populated at merge into `ascend-port`)*
+**Freeze commit:** `8431743`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 first-ever TP=2 end-to-end proof
 — two ranks × Qwen3-0.6B × `max_new_tokens=8` single request completes
@@ -388,8 +388,8 @@ Verdict decision matrix (from gate open):
 
 ## 11. Freeze boundary
 
-This gate freezes the fact that Mini-SGLang-Ascend at *(freeze SHA to
-be populated at merge)* — descending from `c651d91` with the two
+This gate freezes the fact that Mini-SGLang-Ascend at `8431743` —
+descending from `c651d91` with the two
 minimum-fix commits under §5.1 and §5.2, plus the new bring-up
 script and the two Gate 4.1 documents — completes a TP=2 Qwen3-0.6B
 single-request bring-up end-to-end on 2× Ascend 910B1 under the
