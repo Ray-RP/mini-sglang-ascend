@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.13-qwen1.7b-tp2-timing-baseline`
 **Base commit:** `c651d74` (tip of `ascend-port`, Gate 4.12 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §12)*
+**Freeze commit:** `0b66782`
 **Date:** 2026-07-12
 **Kind:** Real-hardware Ascend 910B1 TP=2 timing snapshot
 — two ranks × Qwen3-1.7B × six cases (A–F) × 1 warmup + 3 measured
