@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.6-tp2-dynamic-grow-shrink-b1-b2-b3-b2-b1`
 **Base commit:** `127d537` (tip of `ascend-port`, Gate 4.5 merge)
-**Freeze commit:** _to be recorded after this document is committed_
+**Freeze commit:** `1bc60ce`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 dynamic grow-shrink proof —
 two ranks × Qwen3-0.6B × request A starts alone, request B arrives
