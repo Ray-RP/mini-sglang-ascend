@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.13b-repo-head-redaction`
 **Base commit:** `76f1cac` (tip of `ascend-port`, Gate 4.13a merge)
-**Redaction commit:** captured on freeze (see §3)
+**Redaction commit:** `7d20521`
 **Date:** 2026-07-11
 **Kind:** Documentation-only sweep. Substitutes remote-host,
 username, password, container-id, and public-IP substrings with
