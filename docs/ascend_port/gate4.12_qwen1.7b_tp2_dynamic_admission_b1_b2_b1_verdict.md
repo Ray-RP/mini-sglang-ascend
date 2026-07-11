@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.12-qwen1.7b-tp2-dynamic-admission-b1-b2-b1`
 **Base commit:** `643f50c` (tip of `ascend-port`, Gate 4.11 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §12)*
+**Freeze commit:** `149f9c6`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 dynamic-admission proof
 — two ranks × Qwen3-1.7B × two prompts of unequal tokenized length
