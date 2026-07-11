@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from functools import cached_property
 from typing import TYPE_CHECKING, List
@@ -10,6 +11,13 @@ from minisgl.utils import cached_load_hf_config
 
 if TYPE_CHECKING:
     from minisgl.models import ModelConfig
+
+
+# Gate 4.1: allow a launcher (torchrun, torch.distributed.run) to supply the
+# rendezvous URI via an env var so TP>1 bring-ups can reuse the launcher's
+# store instead of the loopback TCP fallback. TP=1 behaviour is unchanged
+# because the env var is not set on any existing call site.
+_DISTRIBUTED_ADDR_ENV = "MINISGL_DISTRIBUTED_ADDR"
 
 
 @dataclass(frozen=True)
@@ -52,4 +60,11 @@ class EngineConfig:
 
     @property
     def distributed_addr(self) -> str:
+        # Gate 4.1: honour an env-supplied rendezvous URI (e.g. ``env://`` when
+        # launched under torchrun, so the launcher's own TCPStore is reused).
+        # Falls back to the historical loopback URI when the env var is unset,
+        # preserving every existing TP=1 offline call site (Gate 2.1 → 3.4).
+        override = os.environ.get(_DISTRIBUTED_ADDR_ENV)
+        if override:
+            return override
         return "tcp://127.0.0.1:2333"
