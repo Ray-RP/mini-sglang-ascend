@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.11-qwen1.7b-tp2-b2-mixed-kv-decode`
 **Base commit:** `fc51292` (tip of `ascend-port`, Gate 4.10 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §12)*
+**Freeze commit:** `6089cfd`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 B=2 mixed-KV decode
 explicit-evidence proof — two ranks × Qwen3-1.7B × two prompts
