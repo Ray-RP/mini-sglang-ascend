@@ -5,7 +5,7 @@ import json
 import time
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Literal, Set, Tuple
+from typing import AsyncIterator, Callable, Dict, List, Literal, Set, Tuple
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -25,7 +25,6 @@ from minisgl.utils import ZmqAsyncPullQueue, ZmqAsyncPushQueue, init_logger
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
 from pydantic import BaseModel, Field
-from starlette.background import BackgroundTask
 
 from .args import ServerArgs
 
@@ -430,7 +429,20 @@ async def available_models():
     return ModelList(data=[ModelCard(id=state.config.model_path, root=state.config.model_path)])
 
 
-async def shell_completion(req: OpenAICompletionRequest):
+async def shell_completion(
+    req: OpenAICompletionRequest,
+) -> Tuple[int, AsyncIterator[bytes]]:
+    """Enqueue a shell prompt and return ``(uid, byte_generator)``.
+
+    Gate 2.5: rewritten from a ``StreamingResponse``-with-dead-``BackgroundTask``
+    into a plain uid + async byte iterator. The shell body reads
+    ``.body_iterator`` on the returned response directly and never runs the
+    ASGI response cycle, so the old ``BackgroundTask(lambda: _abort)`` — even
+    ignoring that the lambda returned the coroutine function rather than a
+    coroutine — was dead code. Handing the caller the uid alongside the
+    generator lets ``shell()`` route a cancellation into the same AbortAck
+    chain that E1/E2 exercise via ``stream_with_cancellation``.
+    """
     state = get_global_state()
     assert req.messages is not None, "Shell completion only supports chat-completions"
     prompt = [msg.model_dump() for msg in req.messages]
@@ -450,15 +462,7 @@ async def shell_completion(req: OpenAICompletionRequest):
             ),
         )
     )
-
-    async def _abort():
-        await state.abort_user(uid)
-
-    return StreamingResponse(
-        state.stream_generate(uid),
-        media_type="text/event-stream",
-        background=BackgroundTask(lambda: _abort),
-    )
+    return uid, state.stream_generate(uid)
 
 
 
@@ -495,16 +499,42 @@ async def shell():
                 stream=True,
             )
             cur_msg = ""
-            async for chunk in (await shell_completion(req)).body_iterator:
-                msg = chunk.decode()  # type: ignore
-                assert msg.startswith("data: "), msg
-                msg = msg[6:]
-                assert msg.endswith("\n"), msg
-                msg = msg[:-1]
-                if msg == "[DONE]":
-                    continue
-                cur_msg += msg
-                print(msg, end="", flush=True)
+            uid, gen = await shell_completion(req)
+            aborted = False
+            state = get_global_state()
+            try:
+                async for chunk in gen:
+                    msg = chunk.decode()  # type: ignore
+                    assert msg.startswith("data: "), msg
+                    msg = msg[6:]
+                    assert msg.endswith("\n"), msg
+                    msg = msg[:-1]
+                    if msg == "[DONE]":
+                        continue
+                    # Gate 2.5: if a cancel has been requested for this uid,
+                    # stop rendering. FrontendManager.listen's abort_pending
+                    # gate suppresses UserReply after the AbortMsg has been
+                    # processed by the tokenizer, but the tight window
+                    # between abort_user() and the abort-pending set membership
+                    # taking effect (single event-loop step) is closed here.
+                    if aborted:
+                        continue
+                    cur_msg += msg
+                    print(msg, end="", flush=True)
+            except (KeyboardInterrupt, asyncio.CancelledError):
+                # Gate 2.5: route shell-side cancel into the same AbortAck
+                # chain HTTP streaming uses. ``abort_user`` moves the uid into
+                # abort_pending BEFORE sending AbortMsg, so any UserReply
+                # already in flight through the tokenizer will be dropped by
+                # ``listen``. ``wait_for_abort_ack`` blocks until the ack
+                # completes the four-bucket cleanup, giving the shell a
+                # deterministic terminal state before returning to the prompt.
+                aborted = True
+                await state.abort_user(uid)
+                await state.wait_for_abort_ack(uid)
+                print("", flush=True)
+                # Cancelled requests do not enter history.
+                continue
             print("", flush=True)
             history.append((cmd, cur_msg))
     except EOFError:
