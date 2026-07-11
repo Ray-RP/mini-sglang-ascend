@@ -26,10 +26,26 @@ class RequestStatus:
 
 
 class LLM(Scheduler):
-    def __init__(self, model_path: str, dtype: torch.dtype = torch.bfloat16, **kwargs):
+    def __init__(
+        self,
+        model_path: str,
+        dtype: torch.dtype = torch.bfloat16,
+        tp_info: DistributedInfo | None = None,
+        **kwargs,
+    ):
+        # Gate 4.1: allow the offline driver to run under TP > 1 by accepting
+        # a caller-supplied ``tp_info``. Default preserves the historical
+        # single-rank behaviour for every existing TP=1 call site (Gate 2.1 →
+        # Gate 3.4). Each rank must instantiate its own ``LLM`` in its own
+        # process (``set_tp_info`` is a process-global one-shot); the caller
+        # is responsible for the launcher (e.g. torchrun) that sets
+        # ``LOCAL_RANK`` / ``RANK`` / ``WORLD_SIZE`` and passes a matching
+        # ``DistributedInfo(rank=RANK, size=WORLD_SIZE)`` here.
+        if tp_info is None:
+            tp_info = DistributedInfo(0, 1)
         config = SchedulerConfig(
             model_path=model_path,
-            tp_info=DistributedInfo(0, 1),
+            tp_info=tp_info,
             dtype=dtype,
             offline_mode=True,
             **kwargs,
