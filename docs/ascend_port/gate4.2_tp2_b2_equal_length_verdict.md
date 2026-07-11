@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.2-tp2-b2-equal-length`
 **Base commit:** `7e8b1aa` (tip of `ascend-port`, Gate 4.1 merge)
-**Freeze commit:** *(populated at merge into `ascend-port`)*
+**Freeze commit:** `fcd84f0`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 B=2 equal-length proof — two
 ranks × Qwen3-0.6B × 2 identical prompts × `max_new_tokens=8` completes
@@ -292,8 +292,8 @@ Verdict decision matrix (from gate open):
 
 ## 10. Freeze boundary
 
-This gate freezes the fact that Mini-SGLang-Ascend at *(freeze SHA to
-be populated at merge)* — descending from `7e8b1aa` with only the
+This gate freezes the fact that Mini-SGLang-Ascend at `fcd84f0` —
+descending from `7e8b1aa` with only the
 new bring-up script and this verdict document added — completes a
 TP=2 Qwen3-0.6B B=2 equal-length batching end-to-end on 2× Ascend
 910B1 under the frozen eager `npu_fia` bf16 greedy `use_pynccl=False`
