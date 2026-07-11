@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.14-fixed-tp2-capability-matrix`
 **Base commit:** `7f5f639` (tip of `ascend-port`, Gate 4.13b merge)
-**Freeze commit:** captured on freeze (see §11)
+**Freeze commit:** `e9e1212`
 **Date:** 2026-07-12
 **Kind:** Functional capability matrix — two ranks × two models
 (Qwen3-0.6B + Qwen3-1.7B) × six cases (A–F) × one pass each,
