@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.8-qwen1.7b-tp2-single-request`
 **Base commit:** `61fd9e5` (tip of `ascend-port`, Gate 4.7 merge)
-**Freeze commit:** *(recorded in a follow-up commit — see §11)*
+**Freeze commit:** `dee4361`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 first-model-bring-up
 proof — two ranks × Qwen3-1.7B × single prompt × greedy ×
