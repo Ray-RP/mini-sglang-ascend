@@ -4,7 +4,10 @@
 **Verdict:** PASS
 **Branch:** `gate5.4-qwen4b-tp2-b2-mixed-kv-decode`
 **Base commit:** `e1b157b` (tip of `ascend-port`, Gate 5.3 merge)
-**Freeze commit:** `d0ceaac`
+**Freeze commit:** `4c1c7e0`
+**Original pre-amend commit:** `d0ceaac` (superseded by header-fix
+amend; retained as provenance only — the final frozen SHA on the
+`gate5.4-qwen4b-tp2-b2-mixed-kv-decode` branch tip is `4c1c7e0`)
 **Date:** 2026-07-12
 **Kind:** Functional B=2 mixed-KV-decode bring-up with explicit
 per-step FIA metadata evidence — Qwen3-4B on 2 × Ascend 910B1 under
