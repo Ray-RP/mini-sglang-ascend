@@ -49,6 +49,19 @@ Gate freeze evidence:
 | Multi-request batching (equal-length, ragged, mixed-KV decode, dynamic admission) | [`gate2_2_multirequest_verdict.md`](./docs/ascend_port/gate2_2_multirequest_verdict.md) |
 | Request lifecycle and cancel protocol (rollback, atomicity, drain, overlap abort, abort-ack) | [`gate2_3_request_lifecycle_verdict.md`](./docs/ascend_port/gate2_3_request_lifecycle_verdict.md) |
 
+### Fixed-TP2 adaptation status
+
+Fixed-TP2 Ascend adaptation status: Qwen3-0.6B and Qwen3-1.7B pass
+the functional capability matrix under the documented eager
+`npu_fia` bf16 greedy envelope. This is fixed-TP2 adaptation, not
+TP elasticity, not TP switching, not a benchmark, not a
+cross-stack comparison.
+
+| Item | Reference |
+| --- | --- |
+| Milestone summary | [`fixed_tp2_adaptation_milestone.md`](./docs/ascend_port/fixed_tp2_adaptation_milestone.md) |
+| Two-model capability matrix verdict | [`gate4.14_fixed_tp2_capability_matrix_verdict.md`](./docs/ascend_port/gate4.14_fixed_tp2_capability_matrix_verdict.md) |
+
 ---
 
 ## Limitations
