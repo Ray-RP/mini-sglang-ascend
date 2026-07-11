@@ -4,7 +4,7 @@
 **Verdict:** PASS
 **Branch:** `gate4.3-tp2-b2-ragged-prefill`
 **Base commit:** `f806659` (tip of `ascend-port`, Gate 4.2 merge)
-**Freeze commit:** *(populated at merge into `ascend-port`)*
+**Freeze commit:** `d60d59f`
 **Date:** 2026-07-11
 **Kind:** Real-hardware Ascend 910B1 TP=2 B=2 ragged-prefill proof —
 two ranks × Qwen3-0.6B × two unequal-length prompts ×
@@ -347,8 +347,8 @@ Verdict decision matrix (from gate open):
 
 ## 11. Freeze boundary
 
-This gate freezes the fact that Mini-SGLang-Ascend at *(freeze SHA to
-be populated at merge)* — descending from `f806659` with only the
+This gate freezes the fact that Mini-SGLang-Ascend at `d60d59f` —
+descending from `f806659` with only the
 new bring-up script and this verdict document added — completes a
 TP=2 Qwen3-0.6B B=2 ragged (cached_len==0) prefill end-to-end on 2×
 Ascend 910B1 under the frozen eager `npu_fia` bf16 greedy
