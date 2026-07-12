@@ -51,16 +51,17 @@ Gate freeze evidence:
 
 ### Fixed-TP2 adaptation status
 
-Fixed-TP2 Ascend adaptation status: Qwen3-0.6B and Qwen3-1.7B pass
-the functional capability matrix under the documented eager
-`npu_fia` bf16 greedy envelope. This is fixed-TP2 adaptation, not
-TP elasticity, not TP switching, not a benchmark, not a
+Fixed-TP2 Ascend adaptation status: Qwen3-0.6B, Qwen3-1.7B, and
+Qwen3-4B pass the functional capability matrix under the documented
+eager `npu_fia` bf16 greedy envelope. This is fixed-TP2 adaptation,
+not TP elasticity, not TP switching, not a benchmark, not a
 cross-stack comparison.
 
 | Item | Reference |
 | --- | --- |
 | Milestone summary | [`fixed_tp2_adaptation_milestone.md`](./docs/ascend_port/fixed_tp2_adaptation_milestone.md) |
-| Two-model capability matrix verdict | [`gate4.14_fixed_tp2_capability_matrix_verdict.md`](./docs/ascend_port/gate4.14_fixed_tp2_capability_matrix_verdict.md) |
+| Two-model (Qwen3-0.6B / 1.7B) capability matrix verdict | [`gate4.14_fixed_tp2_capability_matrix_verdict.md`](./docs/ascend_port/gate4.14_fixed_tp2_capability_matrix_verdict.md) |
+| Three-model (Qwen3-0.6B / 1.7B / 4B) capability matrix verdict | [`gate5.7_fixed_tp2_qwen3_three_model_matrix_verdict.md`](./docs/ascend_port/gate5.7_fixed_tp2_qwen3_three_model_matrix_verdict.md) |
 
 ---
 
