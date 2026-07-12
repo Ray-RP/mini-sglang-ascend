@@ -31,6 +31,7 @@ Qwen3-0.6B fixed TP=2 server bring-up.
 --attention-backend npu_fia
 --disable-pynccl
 --cuda-graph-max-bs 0
+--page-size 16
 ```
 
 ### Preflight
@@ -56,6 +57,16 @@ Rationale (from Phase 6B.1 inventory):
 * `--cuda-graph-max-bs 0` — the v0.2.0a1 envelope is eager
   (`cuda_graph_bs=[]`). This flag keeps the server inside that
   envelope.
+* `--page-size 16` — the `npu_fia` backend routes to the CANN
+  `aclnnFusedInferAttentionScoreV3` kernel. Its BF16 no-quant path
+  requires `block_size` (paged-KV page size) aligned to `16`, per
+  `CheckFeatureNoquantBlockSize`
+  (`fused_infer_attention_score_tiling_check_feature.cpp:159`).
+  `ServerArgs.page_size` defaults to `1`, which the kernel rejects
+  with error `561002`
+  (`In NO_QUANT situation, block_size should aligned to 16, but got 1`).
+  This flag is required for the Ascend FIA path; the constraint was
+  observed at Phase 6B.6 and locked in Phase 6B.7.
 
 ## 4. Required checks (to perform during real bring-up, not in this gate)
 
@@ -105,6 +116,7 @@ python -m minisgl.server.launch \
   --attention-backend npu_fia \
   --disable-pynccl \
   --cuda-graph-max-bs 0 \
+  --page-size 16 \
   --host 0.0.0.0 \
   --port <PORT>
 ```
