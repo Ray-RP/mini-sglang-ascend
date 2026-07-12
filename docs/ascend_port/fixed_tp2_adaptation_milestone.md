@@ -1,9 +1,10 @@
 # Fixed-TP2 Ascend Adaptation Milestone
 
-**Status:** Documentation-only summary of Gate 4.1–4.14 evidence.
-No new experiments were performed for this document. No runtime
-source was modified. This page consolidates the fixed-TP2
-adaptation record for reviewers who want a single entry point.
+**Status:** Documentation-only summary of Gate 4.1–4.14 and
+Gate 5.1–5.7 evidence. No new experiments were performed for
+this document. No runtime source was modified. This page
+consolidates the fixed-TP2 adaptation record for reviewers who
+want a single entry point.
 
 ---
 
@@ -44,33 +45,47 @@ Python 3.11.14.
 
 ## Models
 
-Both models are frozen at these paths on the validation host:
+All three models are frozen at these paths on the validation host:
 
 | Model | Path on validation host |
 |---|---|
 | Qwen3-0.6B | `/mnt/nvme/models/Qwen3-0.6B` |
 | Qwen3-1.7B | `/mnt/nvme/models/Qwen3-1.7B` |
+| Qwen3-4B   | `/mnt/nvme/models/Qwen3-4B` |
 
-Both are dense Qwen3 architectures, bf16 weights.
+All three are dense Qwen3 architectures, bf16 weights.
 
 ## Covered capabilities
 
 Each capability was proven separately per model per gate; the
 fixed-TP2 capability matrix at Gate 4.14 re-ran the entire
-functional set on both models in one driver.
+functional set on Qwen3-0.6B and Qwen3-1.7B in one driver, and
+Gate 5.7 unified all three models (Qwen3-0.6B / 1.7B / 4B) under
+the same six-case functional matrix in a single driver.
 
-| Capability | Qwen3-0.6B evidence | Qwen3-1.7B evidence |
-|---|---|---|
-| TP=2 init + weight-shard load | Gate 4.1 | Gate 4.8 |
-| B=1 single request | Gate 4.1 | Gate 4.8 |
-| B=1 `max_new_tokens=16` | Gate 4.13 §4 (via 4.14 matrix) | Gate 4.13 §4 |
-| B=2 equal-length | Gate 4.2 | Gate 4.9 |
-| B=2 ragged prefill (unequal lengths) | Gate 4.3 | Gate 4.10 |
-| B=2 mixed-KV decode | Gate 4.4 | Gate 4.11 |
-| Dynamic admission B: 1 → 2 → 1 | Gate 4.5 | Gate 4.12 |
-| Dynamic grow / shrink B: 1 → 2 → 3 → 2 → 1 | Gate 4.6 | *(out of milestone scope)* |
-| Timing snapshots (not benchmarks) | Gate 4.7 | Gate 4.13 |
-| Two-model functional capability matrix | Gate 4.14 | Gate 4.14 |
+| Capability | Qwen3-0.6B evidence | Qwen3-1.7B evidence | Qwen3-4B evidence |
+|---|---|---|---|
+| TP=2 init + weight-shard load | Gate 4.1 | Gate 4.8 | Gate 5.1 |
+| B=1 single request | Gate 4.1 | Gate 4.8 | Gate 5.1 |
+| B=1 `max_new_tokens=16` | Gate 4.13 §4 (via 4.14 matrix) | Gate 4.13 §4 | Gate 5.6 §5 / Gate 5.7 §5 |
+| B=2 equal-length | Gate 4.2 | Gate 4.9 | Gate 5.2 |
+| B=2 ragged prefill (unequal lengths) | Gate 4.3 | Gate 4.10 | Gate 5.3 |
+| B=2 mixed-KV decode | Gate 4.4 | Gate 4.11 | Gate 5.4 |
+| Dynamic admission B: 1 → 2 → 1 | Gate 4.5 | Gate 4.12 | Gate 5.5 |
+| Dynamic grow / shrink B: 1 → 2 → 3 → 2 → 1 | Gate 4.6 | *(out of milestone scope)* | *(out of milestone scope)* |
+| Timing snapshots (not benchmarks) | Gate 4.7 | Gate 4.13 | Gate 5.6 |
+| Two-model functional capability matrix | Gate 4.14 | Gate 4.14 | — |
+| Three-model unified functional capability matrix | Gate 5.7 | Gate 5.7 | Gate 5.7 |
+
+Gate 5.7 confirms that **Qwen3-0.6B, Qwen3-1.7B, and Qwen3-4B all
+pass the fixed-TP2 functional matrix**:
+
+* **A.** B=1 single request, `max_new_tokens=8`
+* **B.** B=1 single request, `max_new_tokens=16`
+* **C.** B=2 equal-length prefill, `max_new_tokens=8` each
+* **D.** B=2 ragged prefill (unequal lengths), `max_new_tokens=8` each
+* **E.** B=2 mixed-KV decode (unequal per-request KV extents on every joint decode step)
+* **F.** Dynamic admission B: 1 → 2 → 1 (staggered reveal of the second request)
 
 Every capability record above verifies the following invariants
 on **both** TP ranks:
@@ -106,6 +121,13 @@ milestone is anchored in one of these files:
 * Gate 4.12 — [`gate4.12_qwen1.7b_tp2_dynamic_admission_b1_b2_b1_verdict.md`](./gate4.12_qwen1.7b_tp2_dynamic_admission_b1_b2_b1_verdict.md)
 * Gate 4.13 — [`gate4.13_qwen1.7b_tp2_timing_baseline_verdict.md`](./gate4.13_qwen1.7b_tp2_timing_baseline_verdict.md)
 * Gate 4.14 — [`gate4.14_fixed_tp2_capability_matrix_verdict.md`](./gate4.14_fixed_tp2_capability_matrix_verdict.md)
+* Gate 5.1 — [`gate5.1_qwen4b_tp2_single_request_verdict.md`](./gate5.1_qwen4b_tp2_single_request_verdict.md)
+* Gate 5.2 — [`gate5.2_qwen4b_tp2_b2_equal_length_verdict.md`](./gate5.2_qwen4b_tp2_b2_equal_length_verdict.md)
+* Gate 5.3 — [`gate5.3_qwen4b_tp2_b2_ragged_prefill_verdict.md`](./gate5.3_qwen4b_tp2_b2_ragged_prefill_verdict.md)
+* Gate 5.4 — [`gate5.4_qwen4b_tp2_b2_mixed_kv_decode_verdict.md`](./gate5.4_qwen4b_tp2_b2_mixed_kv_decode_verdict.md)
+* Gate 5.5 — [`gate5.5_qwen4b_tp2_dynamic_admission_b1_b2_b1_verdict.md`](./gate5.5_qwen4b_tp2_dynamic_admission_b1_b2_b1_verdict.md)
+* Gate 5.6 — [`gate5.6_qwen4b_tp2_timing_baseline_verdict.md`](./gate5.6_qwen4b_tp2_timing_baseline_verdict.md)
+* Gate 5.7 — [`gate5.7_fixed_tp2_qwen3_three_model_matrix_verdict.md`](./gate5.7_fixed_tp2_qwen3_three_model_matrix_verdict.md)
 
 Public-hygiene redaction of the above corpus was performed at
 Gate 4.13a (targeted, Gate 4.13 only) and Gate 4.13b (repo-wide
@@ -117,14 +139,15 @@ and
 ## Non-goals (explicit)
 
 The following are **not** claimed by this milestone and are
-**not** covered by any of the Gate 4.1–4.14 verdicts:
+**not** covered by any of the Gate 4.1–4.14 or Gate 5.1–5.7
+verdicts:
 
 * Runtime TP elasticity or runtime TP switching
 * Graph Re-Linker
 * Tensor-Remap-Kernel
 * TP > 2 (TP=4 / TP=8 / …)
 * Non-Qwen3 architectures
-* Qwen3-4B / 14B / 32B / quantized / MoE variants
+* Qwen3-14B / 32B / quantized / MoE variants (Qwen3-Next, Qwen3-Coder-Next, Qwen3-ASR-*, etc.)
 * Cross-stack comparison against SGLang, vLLM, TGI, TensorRT-LLM
 * Any benchmark, performance ranking, or throughput claim
 * Long-duration soak / rolling-allocator stability run
@@ -134,8 +157,9 @@ The following are **not** claimed by this milestone and are
 
 ## Closure
 
-The Gate 4.1–4.14 verdict set jointly closes the fixed-TP2
-Ascend adaptation milestone for Qwen3-0.6B and Qwen3-1.7B under
-the documented envelope. All further work (TP > 2, larger
-models, benchmark harnesses, upstream merge) is out of scope
+The Gate 4.1–4.14 and Gate 5.1–5.7 verdict set jointly closes
+the fixed-TP2 Ascend adaptation milestone for Qwen3-0.6B,
+Qwen3-1.7B, and Qwen3-4B under the documented envelope. All
+further work (TP > 2, larger dense models, quantized / MoE
+variants, benchmark harnesses, upstream merge) is out of scope
 for this milestone and must be introduced under a new gate.
