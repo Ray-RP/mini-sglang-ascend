@@ -4,7 +4,11 @@
 **Verdict:** PASS
 **Branch:** `gate5.7-fixed-tp2-qwen3-three-model-matrix`
 **Base commit:** `46a22b6` (tip of `ascend-port`, Gate 5.6 merge)
-**Freeze commit:** `b4cd3fa` (pre-amend; final SHA recorded on `ascend-port` tip via `--no-ff` merge; see §17)
+**Freeze commit:** `d5d62e4`
+**Original pre-amend commit:** `b4cd3fa` (superseded by header-fix
+amend; retained as provenance only — the final frozen SHA on the
+`gate5.7-fixed-tp2-qwen3-three-model-matrix` branch tip is
+`d5d62e4`)
 **Date:** 2026-07-12
 **Kind:** Functional three-model capability matrix — Qwen3-0.6B,
 Qwen3-1.7B, and Qwen3-4B on 2 × Ascend 910B1 under fixed TP=2,
