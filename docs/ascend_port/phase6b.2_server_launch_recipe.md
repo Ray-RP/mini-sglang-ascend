@@ -33,6 +33,15 @@ Qwen3-0.6B fixed TP=2 server bring-up.
 --cuda-graph-max-bs 0
 ```
 
+### Preflight
+
+* `prompt_toolkit` must be installed because `api_server.py` imports
+  it at module load. `pyproject.toml` declares it as a base runtime
+  dependency; environments provisioned before that declaration was
+  merged must install it explicitly (`pip install prompt_toolkit`)
+  before the recipe will start. This was observed at Phase 6B.3
+  bring-up on the Ascend host and is recorded here in Phase 6B.4.
+
 Rationale (from Phase 6B.1 inventory):
 
 * `--tp-size 2` — fixed TP=2 envelope.
